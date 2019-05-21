@@ -1,0 +1,131 @@
+<mat-toolbar color="primary">
+  <span class="fill-remaining-space">Register</span>
+</mat-toolbar>
+
+<div class="container" *ngIf="!post; else forminfo" novalidate>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+    <!-- EmailAddress -->
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Emailaddress" formControlName="emailAddress">
+      <mat-error *ngIf="!formGroup.controls['emailAddress'].valid && formGroup.controls['emailAddress'].touched">
+        {{ getErrorEmail() }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Firstname -->
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Firstname" formControlName="firstName">
+      <mat-error *ngIf="!firstName.valid && (firstName.dirty || firstName.touched)">
+        {{ titleAlert }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Lastname -->
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Lastname" formControlName="lastName">
+      <mat-error *ngIf="!formGroup.controls['lastName'].valid && (formGroup.controls['lastName'].dirty || formGroup.controls['lastName'].touched)">
+        Required field, must be between 3 and 30 characters.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Phonenumber -->
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Phonenumber" formControlName="phoneNumber">
+      <mat-error *ngIf="!formGroup.controls['phoneNumber'].valid && (formGroup.controls['phoneNumber'].dirty || formGroup.controls['phoneNumber'].touched)">
+        Phonenumber must be in format: County Code + National Destination Code + Subscriber Number,  e.g. '+411234567890123'.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Date of birth -->
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Date of birth" formControlName="dateOfBirth" [matDatepicker]="picker" [max]="currentDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="!formGroup.controls['dateOfBirth'].valid && (formGroup.controls['dateOfBirth'].dirty || formGroup.controls['dateOfBirth'].touched)">
+        Date must be in format dd-MM-yyyy.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Postalcode -->
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Postalcode" formControlName="postalCode">
+      <mat-error *ngIf="!formGroup.controls['postalCode'].valid && (formGroup.controls['postalCode'].dirty || formGroup.controls['postalCode'].touched)">
+        Required field, must be between 3 and 10 characters, and only numbers are allowed.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- City -->
+    <mat-form-field class="form-element">
+      <input matInput placeholder="City" formControlName="city">
+      <mat-error *ngIf="!formGroup.controls['city'].valid && (formGroup.controls['city'].dirty || formGroup.controls['city'].touched)">
+        Required field, must be between 3 and 40 characters.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Street -->
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Street" formControlName="street">
+      <mat-error *ngIf="!formGroup.controls['street'].valid && (formGroup.controls['street'].dirty || formGroup.controls['street'].touched)">
+        Required field, must be between 3 and 60 characters.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Housenumber -->
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Housenumber" formControlName="houseNumber">
+      <mat-error *ngIf="!formGroup.controls['houseNumber'].valid && (formGroup.controls['houseNumber'].dirty || formGroup.controls['houseNumber'].touched)">
+        Required field, must be between 3 and 5 characters.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Country -->
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <mat-select formControlName="country" required>
+      <mat-option *ngFor="let country of countries" [value]="country">
+        {{country.viewValue}}
+      </mat-option>
+      </mat-select>
+      <mat-error *ngIf="formGroup.controls['country'].hasError('required')">Please choose a country.</mat-error>
+    </mat-form-field>
+
+    <!-- Description -->
+    <mat-form-field class="form-element">
+      <textarea matInput placeholder="Description" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="description"></textarea>
+      <mat-error *ngIf="!formGroup.controls['description'].valid && formGroup.controls['description'].touched">
+        Required field, must be between 5 and 10 characters.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Password -->
+    <mat-form-field class="form-element">
+      <input type="password" matInput placeholder="Password" formControlName="password">
+      <mat-hint>Choose a password of at least eight characters, one uppercase letter and one number</mat-hint>
+      <mat-error *ngIf="!formGroup.controls['password'].valid && formGroup.controls['password'].touched">
+        {{ getErrorPassword() }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" matInput placeholder="Verify Password" formControlName='verifyPassword' [errorStateMatcher]="errorMatcher">
+      <mat-error *ngIf="formGroup.hasError('passwordsDoNotMatch')">
+        Passwords do not match!
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-element">
+      <mat-checkbox formControlName="validate" value="1">Name min. 3 characters</mat-checkbox>
+    </div>
+
+    <!-- Submit button -->
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Submit Form</button>
+    </div>
+
+  </form>
+</div>
+
+<ng-template #forminfo>
+  <div class="container">
+    {{ post | json }}
+  </div>
+</ng-template>

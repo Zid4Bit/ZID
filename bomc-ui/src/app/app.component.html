@@ -1,0 +1,22 @@
+<!-- The content below is only a placeholder and can be replaced. -->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <!--  <span>HOME</span> -->
+    <span><a mat-button routerLink="/customer">HOME</a></span>
+    <span class="spacer"></span>
+    <span
+      ><a>{{ title }}</a></span
+    >
+    <span class="spacer"></span>
+    <a mat-button routerLink="/register">Register</a>
+  </mat-toolbar-row>
+</mat-toolbar>
+<!--
+<footer>
+  <p>
+    Copyright &copy; 2019 by Bomc.
+    <br />All Rights Reserved.
+  </p>
+</footer>
+-->
+<router-outlet></router-outlet>
