@@ -130,9 +130,12 @@
           <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Submit Form</button>
         </div>
 
+        <p>Form value: {{ formGroup.value | json }}</p>
+        <p>Form status: {{ formGroup.status | json }}</p>
       </form>
     </div>
   </mat-card-content>
+
 </mat-card>
 
 <ng-template #forminfo>

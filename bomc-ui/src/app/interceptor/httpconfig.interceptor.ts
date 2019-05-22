@@ -34,11 +34,11 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
     request = request.clone({ headers: request.headers.set('Accept', 'application/json;charset=UTF-8') });
 
-    console.log('HttpConfigInterceptor#intercept - headers:', request.headers.keys());
+    console.log('HttpConfigInterceptor#intercept - request:', request);
 
     return next.handle(request).pipe(
       // Set request retry for three iterations.
-      // retry(3),
+      retry(1),
       // _____________________________________________
       // Handle the response.
       // ---------------------------------------------

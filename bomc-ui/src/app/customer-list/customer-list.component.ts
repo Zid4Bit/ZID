@@ -29,7 +29,7 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log('CustomerListComponent#ngOnInit');
+    console.log('CustomerListComponent#ngOnInit', this.listDataSource.data.length);
 
     this.customerListService.findAll().subscribe(data => {
       this.listDataSource.data = data as Customer[];
@@ -50,14 +50,14 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
   }
 
   public redirectToUpdate = (id: string) => {
-    console.log('CustomerListComponent#redirectToUpdate id=', id);
+    console.log('CustomerListComponent#redirectToUpdate id =', id);
 
     const url = `/details/${id}`;
     this.router.navigate([url]);
   }
 
   public redirectToDelete = (id: string) => {
-    console.log('CustomerListComponent#redirectToDelete id=', id);
+    console.log('CustomerListComponent#redirectToDelete id =', id);
 
     this.customerListService.deleteCustomer(id).subscribe(response => {
       // The filter funtion returns, all data except the data with the given id.

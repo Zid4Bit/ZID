@@ -35,8 +35,8 @@ export class CustomerListService {
   }
 
   public updateCustomer(customer: Customer) {
-    console.log('CustomerListService#getCustomerById - customer =', customer);
+    console.log('CustomerListService#updateCustomer - customer =', customer);
 
-    return this.http.put<Customer>(this.customerListUrl, customer).subscribe();
+    return this.http.put<Customer>(this.customerListUrl, customer);
   }
 }

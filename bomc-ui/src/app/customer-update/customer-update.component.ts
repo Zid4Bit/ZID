@@ -47,9 +47,10 @@ export class CustomerUpdateComponent implements OnInit {
   public redirectToUpdate = (customer: Customer) => {
     console.log('CustomerUpdateComponent#redirectToUpdate customer=', customer);
 
-    this.customerListService.updateCustomer(customer);
+    this.customerListService.updateCustomer(customer).subscribe(() => {
+      const url = `/customer`;
+      this.router.navigate([url]);
+    });
 
-    const url = `/customer`;
-    this.router.navigate([url]);
   }
 }
