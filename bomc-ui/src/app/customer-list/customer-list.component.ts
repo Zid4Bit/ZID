@@ -3,7 +3,6 @@ import { Customer } from '../models/customer';
 import { CustomerListService } from '../service/customer-list.service';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
-import { CustomerFormService } from '../service/customer-form.service';
 
 @Component({
   selector: 'app-customer-list',
@@ -27,7 +26,6 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
     private router: Router) {
     console.log('CustomerListComponent#co');
 
-    //this.dataSource = new MatTableDataSource<Customer>();
   }
 
   ngOnInit() {
