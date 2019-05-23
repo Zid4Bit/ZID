@@ -95,7 +95,7 @@ public class CustomerController {
 	
 	@ApiOperation(value = "Get customer by email address.", response = CustomerDto.class)
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Successfully retrieved a customer dto by the given email address."),
+			@ApiResponse(code = 200, message = "Successfully retrieved a customer dto by the given email address or null if no customer is available."),
 			@ApiResponse(code = 401, message = "Not authorized to view the resource."),
 			@ApiResponse(code = 403, message = "Accessing the resource that trying to reach is forbidden."),
 			@ApiResponse(code = 404, message = "The resource that trying to reach is not found.")
