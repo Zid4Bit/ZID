@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient  } from '@angular/common/http';
 import { Customer } from '../models/customer';
-import { of, Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { environment } from './../../environments/environment';
+
+const customerAPIEndpoint = environment.customerAPIEndpoint;
 
 @Injectable()
 export class CustomerFormService {
@@ -10,8 +11,9 @@ export class CustomerFormService {
   private customerFormUrl: string;
 
   constructor(private http: HttpClient) {
+
     // Set url to backend services.
-    this.customerFormUrl = 'http://localhost:8080/customer';
+    this.customerFormUrl = `${customerAPIEndpoint}/customer`;
   }
 
   public createCustomer(customer: Customer) {
@@ -20,4 +22,10 @@ export class CustomerFormService {
     return this.http.post<Customer>(this.customerFormUrl, customer) ;
   }
 
+  public getCustomerByEmailAddress(emailAddress: string) {
+    console.log('CustomerFormService#getCustomerByEmailAddress - emailAddress =', emailAddress);
+
+    // return this.http.post<Customer>(`${this.customerFormUrl}email-address/${emailAddress}`);
+    return this.http.post<Customer>(`${this.customerFormUrl}/email-address`, { emailAddress });
+  }
 }

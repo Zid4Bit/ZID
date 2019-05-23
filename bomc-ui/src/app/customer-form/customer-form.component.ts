@@ -81,7 +81,7 @@ export class CustomerFormComponent implements OnInit {
     return this.formGroup.get('name') as FormControl;
   }
 
-  checkInUseEmail(control) {
+  checkInUseEmail(control: { value: string; }) {
     // TODO: Simulate a database access, that checks the email address.
     const db = ['bomc@bomc.org'];
 
@@ -90,7 +90,7 @@ export class CustomerFormComponent implements OnInit {
         const result = (db.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
         observer.next(result);
         observer.complete();
-      }, 4000);
+      }, 2000);
     });
   }
 

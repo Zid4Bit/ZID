@@ -3,9 +3,11 @@ import { Customer } from '../models/customer';
 import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerFormService } from '../service/customer-form.service';
-import { Observable } from 'rxjs';
+import { Observable, of, } from 'rxjs';
 import { ErrorStateMatcher } from '@angular/material';
 import { LastnameValidator } from '../validators/lastname.validator';
+//import { map } from 'rxjs/operators';
+import { tap, map, filter } from 'rxjs/operators';
 
 export interface Country {
   value: string;
@@ -43,6 +45,9 @@ export class RegistrationComponent implements OnInit {
    *
    * @param formBuilder the given formBuilder instance.
    */
+
+   validationResult;
+
   constructor(
     private formBuilder: FormBuilder,
     private customerFormService: CustomerFormService,
@@ -85,7 +90,7 @@ export class RegistrationComponent implements OnInit {
     const validLastnameRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
 
     this.formGroup = this.formBuilder.group({
-      emailAddress: [null, [Validators.required, Validators.pattern(emailRegex)], this.checkInUseEmail],
+      emailAddress: [null, [Validators.required, Validators.pattern(emailRegex)], this.checkInUseEmail.bind(this)],
       firstName: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       lastName: ['', [Validators.compose([
         Validators.required,
@@ -152,19 +157,15 @@ export class RegistrationComponent implements OnInit {
   }
   */
 
-  checkInUseEmail(control: { value: string; }) {
+  checkInUseEmail(control: { value: string; }) {//: Observable<boolean> {
     console.log('RegistrationComponent#checkInUseEmail');
 
-    // TODO Simulate database access
-    const db = ['bomc@bomc.org'];
-
-    return new Observable(observer => {
-      setTimeout(() => {
-        const result = (db.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
-        observer.next(result);
-        observer.complete();
-      }, 2000);
-    });
+    return this.customerFormService.getCustomerByEmailAddress(control.value)
+      .pipe(
+        map(customer => {
+          return (customer !== null) ? { alreadyInUse: true } : null;
+        })
+      );
   }
 
   getErrorEmail() {

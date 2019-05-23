@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Customer } from '../models/customer';
-import { of, Observable } from 'rxjs';
-import { catchError, tap, retry } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { environment } from './../../environments/environment';
+
+const customerAPIEndpoint = environment.customerAPIEndpoint;
 
 /**
  * A separate service for hanlding errors.
@@ -10,10 +12,11 @@ import { catchError, tap, retry } from 'rxjs/operators';
 @Injectable()
 export class CustomerListService {
 
-  private customerListUrl: string;
+  customerListUrl: string;
 
   constructor(private http: HttpClient) {
-    this.customerListUrl = 'http://localhost:8080/customer';
+
+    this.customerListUrl = `${customerAPIEndpoint}/customer`;
   }
 
   public findAll(): Observable<Customer[]> {
