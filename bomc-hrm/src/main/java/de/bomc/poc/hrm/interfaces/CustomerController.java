@@ -104,7 +104,12 @@ public class CustomerController {
 	public CustomerDto getCustomerByEmailAddress(@ApiParam(value = "The customer email address.", required = true) @Valid @RequestBody final CustomerEmailDto customerEmailDto) {
 		LOGGER.debug(LOG_PREFIX + "getCustomerByEmailAddress [customerEmailDto=" + customerEmailDto + "]");
 
-		return this.customerMapper.mapEntityToDto(customerService.findByEmailAddress(customerEmailDto));
+		try {
+			// Return the customer by the given email.
+			return this.customerMapper.mapEntityToDto(customerService.findByEmailAddress(customerEmailDto));
+		} catch(final IllegalStateException illegalStateException) {
+			return null;
+		}
 	}
 
 	
